@@ -1,29 +1,34 @@
 const listaDeProductos = [
     {
+        img: "../img/pier.jpg", 
         id: 1,
         nombre: "Pier",
         precio: 1200,
         stock: 1000
     },
     {
+        img: "/img/pier.jpg",
         id: 2,
         nombre: "Kermesse",
         precio: 2500,
         stock: 3000
     },
     {
+        img: "./img/pier.jpg",
         id: 3,
         nombre: "Superlogico",
         precio: 3000,
         stock: 2500,
     },
     {
+        img: "./img/pier.jpg",
         id: 4,
         nombre: "Divididos",
         precio: 6000,
         stock: 5000
     },
     {
+        img: "./img/pier.jpg",
         id: 5,
         nombre: "Pier",
         precio: 1200,
@@ -40,6 +45,9 @@ let cart = []
 
 buttonEmpty.addEventListener('click', emptyButtonHandler)
 
+loadCartFromStorage() 
+renderCart()
+
 
 listaDeProductos.forEach((prod) => {
     let container = document.createElement('div')
@@ -47,6 +55,10 @@ listaDeProductos.forEach((prod) => {
     //Body
     let cardBody = document.createElement("div")
     cardBody.classList.add('card-body')
+    //imagen
+    let cardImg = document.createElement("img")
+    cardBody.classList.add('card-img-top')
+    cardImg.innerText = `${prod.img}`
     //Title
     let cardTitle = document.createElement("h5")
     cardTitle.classList.add('card-title')
@@ -66,6 +78,7 @@ listaDeProductos.forEach((prod) => {
     cardButton.setAttribute('mark', prod.id)
     cardButton.addEventListener('click', addProdToCart)
 
+    cardBody.append(cardImg)
     cardBody.append(cardTitle)
     cardBody.append(cardPrice)
     cardBody.append(cardStock)
@@ -80,6 +93,8 @@ function addProdToCart(event){
 }
 
 function renderCart(){
+
+    saveCartToStorage()
 
     cartList.innerHTML = ''
 
@@ -132,4 +147,13 @@ function calculateTotalPrice(){
         return total + item[0].precio
 
     }, 0)
+}
+
+function saveCartToStorage(){
+    localStorage.setItem('cart', JSON.stringify(cart))
+}
+function loadCartFromStorage(){
+    if(localStorage.getItem('cart') !== null){
+        cart = JSON.parse(localStorage.getItem('cart'))
+    }
 }
