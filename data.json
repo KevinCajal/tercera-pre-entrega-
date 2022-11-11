@@ -1,0 +1,44 @@
+[
+    {
+        "img": "./img/Pier.jpg",
+        "id": 1,
+        "nombre": "Pier",
+        "precio": 1200,
+        "stock": 1000
+    },
+    {
+        "img": "./img/kerme.jpg",   
+        "id": 2,
+        "nombre": "Kermesse",
+        "precio": 2500,
+        "stock": 3000
+    },
+    {
+        "img": "./img/superlogico.jpg",
+        "id": 3,
+        "nombre": "Superlogico",
+        "precio": 3000,
+        "stock": 2500
+    },
+    {
+        "img": "./img/divididos.jpg",
+        "id": 4,
+        "nombre": "Divididos",
+        "precio": 6000,
+        "stock": 5000
+    },
+    {
+        "img": "./img/nagual.jpg",
+        "id": 5,
+        "nombre": "Nagual",
+        "precio": 1200,
+        "stock": 1200
+    },
+    {
+        "img": "./img/dividi2.jpg",
+        "id": 6,
+        "nombre": "Divididos",
+        "precio": 1200,
+        "stock": 1200
+    }
+]

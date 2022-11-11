@@ -1,51 +1,71 @@
+const galeria = document.querySelector('#img-seccion1')
+fetch('/data.json')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach((post) =>{
+            const img = document.createElement('img' )
+            img.innerHTML= `<img col-sm-4 src= ${post.img}>`
+            galeria.append(img)
+           console.log('img')
+        })
+    })
+
+
 const listaDeProductos = [
     {
-        img: "../img/pier.jpg", 
+        img: "./img/Pier.jpg",
         id: 1,
         nombre: "Pier",
         precio: 1200,
         stock: 1000
     },
     {
-        img: "/img/pier.jpg",
+        img: "./img/kerme.jpg",   
         id: 2,
         nombre: "Kermesse",
         precio: 2500,
         stock: 3000
     },
     {
-        img: "./img/pier.jpg",
+        img: "./img/superlogico.jpg",
         id: 3,
         nombre: "Superlogico",
         precio: 3000,
         stock: 2500,
     },
     {
-        img: "./img/pier.jpg",
+        img: "./img/divididos.jpg",
         id: 4,
         nombre: "Divididos",
         precio: 6000,
         stock: 5000
     },
     {
-        img: "./img/pier.jpg",
+        img: "./img/nagual.jpg",
         id: 5,
-        nombre: "Pier",
+        nombre: "Nagual",
+        precio: 1200,
+        stock: 1200
+    },
+    {
+        img: "./img/dividi2.jpg",
+        id: 6,
+        nombre: "Divididos",
         precio: 1200,
         stock: 1200
     }
 ]
+ 
 
-
-let catalog = document.getElementById('items')
+let catalogo = document.getElementById('items')
 let cartList = document.getElementById('carrito')
-let buttonEmpty = document.getElementById('boton-vaciar')
-let totalValue = document.getElementById('total')
+let botonVaciar = document.getElementById('boton-vaciar')
+let valorTotal = document.getElementById('total')
 let cart = []
 
-buttonEmpty.addEventListener('click', emptyButtonHandler)
+botonVaciar.addEventListener('click', controlBotonVaciar)
 
-loadCartFromStorage() 
+cargarCarrito() 
 renderCart()
 
 
@@ -57,8 +77,8 @@ listaDeProductos.forEach((prod) => {
     cardBody.classList.add('card-body')
     //imagen
     let cardImg = document.createElement("img")
-    cardBody.classList.add('card-img-top')
-    cardImg.innerText = `${prod.img}`
+    cardImg.classList.add('card-img')
+    cardImg.src = `${prod.img}`
     //Title
     let cardTitle = document.createElement("h5")
     cardTitle.classList.add('card-title')
@@ -78,13 +98,14 @@ listaDeProductos.forEach((prod) => {
     cardButton.setAttribute('mark', prod.id)
     cardButton.addEventListener('click', addProdToCart)
 
-    cardBody.append(cardImg)
+    
     cardBody.append(cardTitle)
+    cardBody.append(cardImg)
     cardBody.append(cardPrice)
     cardBody.append(cardStock)
     cardBody.append(cardButton)
     container.append(cardBody)
-    catalog.append(container)
+    catalogo.append(container)
 })
 
 function addProdToCart(event){
@@ -94,13 +115,15 @@ function addProdToCart(event){
 
 function renderCart(){
 
-    saveCartToStorage()
+    guardarCarrito()
 
     cartList.innerHTML = ''
 
-    let cartWithoutRepeatedElements = [...new Set(cart)]
+    //Que no se repiten los elementos en el carrito
 
-    cartWithoutRepeatedElements.forEach((itemId) => {
+    let carroSinRepetir = [...new Set(cart)]
+
+    carroSinRepetir.forEach((itemId) => {
         let item = listaDeProductos.filter((producto) => {
             return producto.id === parseInt(itemId)
         })
@@ -108,37 +131,58 @@ function renderCart(){
             return id === itemId ? total += 1 : total
         }, 0)
    
-
+    // lista para colocar elementos de carrito
+    
     let linea = document.createElement('li')
     linea.classList.add('list-group-item', 'text-right', 'mx-2')
     linea.innerText = `${quantity} x ${item[0].nombre} - $${item[0].precio}`
 
-    let buttonDelete = document.createElement('button')
-    buttonDelete.classList.add('btn', 'btn-danger', 'mx-5')
-    buttonDelete.innerText = 'X'
-    buttonDelete.dataset.item = itemId
-    buttonDelete.addEventListener('click', deleteProduct)
+    // creo boton de borrar
 
-    linea.append(buttonDelete)
+    let borrar = document.createElement('button')
+    borrar.classList.add('btn', 'btn-danger', 'mx-5')
+    borrar.innerText = 'Eliminar'
+    borrar.dataset.item = itemId
+    borrar.addEventListener('click', eliminarProducto)
+
+    linea.append(borrar)
     cartList.append(linea)
     })
-    totalValue.innerText = calculateTotalPrice()
+    valorTotal.innerText = calcularElTotal()
 } 
-//Vaciar
-function deleteProduct(event) {
-        let id = event.target.dataset.item
-        cart = cart.filter((cartId) => {
-            return cartId != id 
-        })
-        renderCart()
+//Eliminar productos
+function eliminarProducto(event) {
+    
+          // Agrego libreria para confirmar evento      
+          Swal.fire({
+            title: '¿Quiere eliminar este producto?',
+            showDenyButton: true,
+            confirmButtonText: 'Eliminar',
+            denyButtonText: `Calcelar`,
+
+          }).then((result) => {
+            
+            if (result.isConfirmed) {
+                let id = event.target.dataset.item
+                cart = cart.filter((cartId) => {
+                    return cartId != id 
+                })
+                renderCart()
+              Swal.fire('¡Eliminado!', '', 'success')
+            } else if (result.isDenied) {
+              Swal.fire('No se elimino el producto', '', 'info')
+            }
+          })
     }
-function emptyButtonHandler(){
+function controlBotonVaciar(){
     cart = []
     cartList.innerHTML = ''
-    totalValue.innerText = 0
+    valorTotal.innerText = 0
 }
 
-function calculateTotalPrice(){
+
+
+function calcularElTotal(){
     return cart.reduce((total, itemId) => {
         let item = listaDeProductos.filter((producto) => {
             return producto.id === parseInt(itemId)
@@ -149,10 +193,10 @@ function calculateTotalPrice(){
     }, 0)
 }
 
-function saveCartToStorage(){
+function guardarCarrito(){
     localStorage.setItem('cart', JSON.stringify(cart))
 }
-function loadCartFromStorage(){
+function cargarCarrito(){
     if(localStorage.getItem('cart') !== null){
         cart = JSON.parse(localStorage.getItem('cart'))
     }
