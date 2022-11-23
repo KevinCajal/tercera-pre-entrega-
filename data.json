@@ -1,44 +1,38 @@
 [
     {
-        "img": "./img/Pier.jpg",
-        "id": 1,
-        "nombre": "Pier",
-        "precio": 1200,
-        "stock": 1000
+        "img": "./img/pic01.jpg"
     },
     {
-        "img": "./img/kerme.jpg",   
-        "id": 2,
-        "nombre": "Kermesse",
-        "precio": 2500,
-        "stock": 3000
+        "img": "./img/pic02.jpg"
     },
     {
-        "img": "./img/superlogico.jpg",
-        "id": 3,
-        "nombre": "Superlogico",
-        "precio": 3000,
-        "stock": 2500
+        "img": "./img/pic03.jpg"
     },
     {
-        "img": "./img/divididos.jpg",
-        "id": 4,
-        "nombre": "Divididos",
-        "precio": 6000,
-        "stock": 5000
+        "img": "./img/pic04.jpg"
     },
     {
-        "img": "./img/nagual.jpg",
-        "id": 5,
-        "nombre": "Nagual",
-        "precio": 1200,
-        "stock": 1200
+        "img": "./img/pic05.jpg"
     },
     {
-        "img": "./img/dividi2.jpg",
-        "id": 6,
-        "nombre": "Divididos",
-        "precio": 1200,
-        "stock": 1200
+        "img": "./img/pic06.jpg"
+    },
+    {
+        "img": "./img/pic07.jpg"
+    },
+    {
+        "img": "./img/pic08.jpg"
+    },
+    {
+        "img": "./img/pic09.jpg"
+    },
+    {
+        "img": "./img/pic10.jpg"
+    },
+    {
+        "img": "./img/pic11.jpg"
+    },
+    {
+        "img": "./img/pic12.jpg"
     }
 ]

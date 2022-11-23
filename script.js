@@ -1,16 +1,15 @@
 const galeria = document.querySelector('#img-seccion1')
 fetch('/data.json')
     .then(response => response.json())
-    .then(data => {
+    .then(data =>  {
         data.forEach((post) =>{
-            const img = document.createElement('img' )
-            img.innerHTML= `<img col-sm-4 src= ${post.img}>`
-            galeria.append(img)
-           console.log('img')
+            //console.log('post: '+post.img)
+            let imagen = document.createElement('src')
+            imagen.innerHTML= `<img col-sm-3 src= ${post.img}>`
+            galeria.append(imagen)
+           //console.log('img')
         })
     })
-
-
 const listaDeProductos = [
     {
         img: "./img/Pier.jpg",

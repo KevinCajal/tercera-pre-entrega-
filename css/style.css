@@ -84,7 +84,7 @@ body {
     text-align: center;
 }
 
-#img-seccion1, #img-seccion2 {
+#conteiner0, #img-seccion2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
